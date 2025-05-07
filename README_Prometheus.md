@@ -1,216 +1,193 @@
-# Manticore: A Lightweight Python Static Site Generator
+# Manticore: A Lightweight Static Site Generator for Markdown Content
 
 ## Project Overview
 
-Manticore is a lightweight, minimalist static site generator designed to simplify the process of creating and managing static websites using Python. It offers a straightforward approach to converting Markdown content into fully rendered HTML sites with minimal configuration.
-
-### Core Purpose
-Manticore enables developers and content creators to generate static websites quickly and efficiently, with support for two primary use cases:
-- Blog/Article websites
-- Personal resume websites
+Manticore is a lightweight, flexible static site generator designed to simplify the process of creating websites from Markdown content. It provides a straightforward way to transform Markdown files into static HTML pages with minimal configuration.
 
 ### Key Features
-- **Simple Markdown-to-HTML Conversion**: Easily transform Markdown files into static HTML pages
-- **Flexible Content Management**: Supports separate content directories for blogs and resumes
-- **Template-Based Rendering**: Uses Jinja2 for dynamic template rendering
-- **Minimal Configuration**: Requires minimal setup and provides a streamlined build process
-- **Command-Line Interface**: Offers simple CLI commands for generating sites
+- Generate static websites from Markdown content
+- Support for two primary templates:
+  - Blog/Default Site: Generates a multi-page blog with a home page and individual post pages
+  - Resume: Creates a single-page resume website
+- Simple, command-line driven generation process
+- Automatic content parsing and HTML rendering
+- Customizable through Markdown metadata
 
 ### Benefits
-- **Lightweight and Fast**: Minimal dependencies and quick site generation
-- **Version Control Friendly**: Content stored in Markdown files is easy to track and manage
-- **Responsive Design**: Utilizes Skeleton CSS for mobile-friendly layouts
-- **Extensible**: Designed with potential for future template and feature expansions
+- Easy content management using Markdown files
+- No database or complex server-side setup required
+- Quick deployment as a static website
+- Lightweight and minimalistic design
+- Flexible template system using Jinja2
+- Responsive design with Skeleton CSS
+
+### Use Cases
+Ideal for developers, writers, and professionals who want to:
+- Create personal blogs
+- Publish professional resumes
+- Generate simple, fast-loading websites
+- Manage content through plain text Markdown files
 
 ## Getting Started, Installation, and Setup
 
 ### Prerequisites
 
-- Python 3.7 or higher
-- pip package manager
+- Python 3.6 or higher
+- pip (Python package manager)
 
-### Installation
+### Quick Start Guide
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/yourrepository.git
-   cd yourrepository
-   ```
-
-2. Create a virtual environment (optional but recommended):
+1. Clone the repository to your local machine
+2. Create a virtual environment:
    ```bash
    python3 -m venv venv
-   source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
    ```
 
-3. Install required dependencies:
+3. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
 
 ### Development Setup
 
-The project uses `click` for command-line interactions and supports generating two types of templates: default blog and resume.
+#### Blog Generation
+To generate a blog from markdown files:
 
-### Running the Project
+1. Add markdown posts in the `content/default` directory
+2. Run the build command:
+   ```bash
+   python build.py --default default
+   ```
 
-#### Blog Template Generation
-To generate the default blog template:
+#### Resume Generation
+To generate a resume:
+
+1. Add resume markdown file in the `content/resume` directory
+2. Run the build command:
+   ```bash
+   python build.py --resume resume
+   ```
+
+### Command-Line Interface
+
+Manticore provides a flexible CLI for generating static sites:
+
 ```bash
-python build.py --default
+python build.py [OPTIONS]
+
+Options:
+  -d, --default TEXT  Generate the default blog template
+  -r, --resume TEXT   Generate a resume template
+  --help              Show this message and exit
 ```
 
-#### Resume Template Generation
-To generate a resume template:
-```bash
-python build.py --resume
-```
+### Output
 
-### Dependencies
-
-The project requires the following Python packages:
-- click (v7.1.1)
-- Jinja2 (v2.11.3)
-- markdown2 (v2.3.8)
-- MarkupSafe (v1.1.1)
-
-### Supported Platforms
-
-This project is compatible with:
-- macOS
-- Linux
-- Windows
+- Running the build commands will create an `output` folder
+- For blog generation, the output will include:
+  ```
+  /output
+  └── posts
+      └── home.html
+  ```
 
 ### Troubleshooting
 
-- Ensure you have Python 3.7+ installed
-- Make sure all dependencies are installed via `pip install -r requirements.txt`
-- Check that you're running commands from the project root directory
+- Ensure all dependencies are installed correctly
+- Check that markdown files are placed in the correct content directories
+- Use the `--help` flag for additional command information
 
-## Usage
+## Usage Examples
 
-This tool generates static HTML sites from markdown files, supporting blog and resume templates.
+### Generating a Blog
 
-### Basic Usage
+To generate a blog site, use the following command:
 
-Generate a blog site:
 ```bash
-python build.py --default
+python build.py --default default
 ```
-This command processes markdown files in the `content/default/` directory and generates HTML files in the `output/` directory. It will create:
-- `output/home.html`: A listing of all blog posts
-- `output/posts/[slug].html`: Individual blog post pages
 
-Generate a resume:
+This will:
+- Parse markdown files from the `content/default` directory
+- Generate HTML files in the `output/posts` directory
+- Create a home page and individual post pages
+
+### Generating a Resume
+
+To generate a resume site, use the following command:
+
 ```bash
-python build.py --resume
+python build.py --resume resume
 ```
-This command processes the markdown file in `content/resume/resume.md` and generates `output/resume.html`.
 
-### Command Options
+This will:
+- Parse the markdown file from the `content/resume` directory
+- Generate a single HTML page in the `output` directory
 
-| Option | Short Flag | Description |
-|--------|------------|-------------|
-| `--default` | `-d` | Generate blog site from markdown files |
-| `--resume` | `-r` | Generate resume page from markdown file |
+### Command Line Options
+
+You can view all available options by running:
+
+```bash
+python build.py --help
+```
+
+This will display the available command-line options:
+- `-d, --default`: Generate the default blog template
+- `-r, --resume`: Generate a resume template
+- `--help`: Show help message and exit
 
 ### Example Workflow
 
-1. Create blog posts in `content/default/` as markdown files
-2. Run `python build.py --default` to generate the blog site
-3. The generated site will be available in the `output/` directory
+1. Add your markdown content:
+   - Blog posts in `content/default/`
+   - Resume in `content/resume/resume.md`
 
-### Requirements
-- Python 3.x
-- Click library
-- Markdown2 library
-- Jinja2 library
+2. Run the build command:
+   ```bash
+   python build.py --default default   # For blog
+   # or
+   python build.py --resume resume     # For resume
+   ```
 
-Ensure these dependencies are installed before running the tool.
-
-## Configuration
-
-The project uses Markdown files for configuration and content management. Configuration is primarily handled through metadata within Markdown files.
-
-### Content Configuration
-
-The project supports two types of content configurations:
-
-#### Blog Post Configuration
-Each blog post is configured using metadata at the top of a Markdown file located in `content/default/`. The metadata includes:
-
-```markdown
-blog: Blog name
-title: Post title
-date: DD MMM YYYY
-summary: Brief post description
-slug: url-friendly-slug
-```
-
-Example (`content/default/article.md`):
-```markdown
-blog: Blaze codes
-title: How to reverse the neutron flow
-date: 30 Aug 2019
-summary: Technical description
-slug: neutron-flow
-```
-
-#### Resume Configuration
-Resume details are configured in a single Markdown file (`content/resume/resume.md`) with the following metadata:
-
-```markdown
-name: Your Name
-designation: Your Job Title
-address: Street Address
-phone: Phone Number
-email: Contact Email
-```
-
-### Template Configuration
-Templates are located in the `templates/` directory with predefined structures for:
-- Default blog home page: `templates/default/home.html`
-- Default blog post page: `templates/default/post.html`
-- Resume page: `templates/resume/home.html`
-- Layout template: `templates/layout.html`
-
-### Rendering Configuration
-The rendering process is managed by the `Render` class in `render.py`, which uses Jinja2 for template rendering and automatically generates HTML output in the `output/` directory.
+3. Find the generated static site in the `output` directory
 
 ## Project Structure
 
-The project is organized into several key directories and files that support the static site generation process:
+The project is organized into several key directories and files to support the static site generation process:
 
-### Root Directory
-- `build.py`: The main script for generating static sites, providing command-line interface for site generation
+#### Root Directory
+- `build.py`: The main script for generating static sites, providing command-line interface options
 - `parse.py`: Likely handles parsing of markdown content
-- `render.py`: Presumably manages rendering of templates
-- `requirements.txt`: Lists Python package dependencies for the project
-- `LICENSE`: Contains the project's licensing information
+- `render.py`: Responsible for rendering templates
+- `requirements.txt`: Lists project dependencies
+- `LICENSE`: Project licensing information
 
-### Content Directory
-Contains source markdown files for different site types:
+#### Content Directory
+Contains source markdown files for different types of content:
 - `content/default/`: Stores markdown files for blog posts
-  - `article.md`: Example blog post markdown file
-  - `newarticle.md`: Another example blog post markdown file
+  - `article.md`
+  - `newarticle.md`
 - `content/resume/`: Contains markdown for resume generation
-  - `resume.md`: Markdown file for resume content
+  - `resume.md`
 
-### Templates Directory
+#### Templates Directory
 Provides HTML templates for site generation:
+- `templates/layout.html`: Base layout template
 - `templates/default/`: Templates for default blog site
-  - `home.html`: Main page template
-  - `post.html`: Individual post template
-- `templates/resume/`: Templates specific to resume site
-  - `home.html`: Resume page template
-- `templates/layout.html`: Likely a base layout template used across different site types
+  - `home.html`
+  - `post.html`
+- `templates/resume/`: Templates specific to resume generation
+  - `home.html`
 
-### Generated Output
-While not present in the repository, the build process creates an `output/` directory with generated static site files
-
-### Configuration and Version Control
+#### Key Project Files
 - `.gitignore`: Specifies intentionally untracked files to ignore
 - `.gitattributes`: Defines attributes for pathnames in the repository
+- `README.md`: Project documentation and guide
+- `README_Prometheus.md`: Additional documentation (purpose unclear)
+
+The structure supports generating different types of static sites (blog, resume) with flexible templating and content management.
 
 ## Technologies Used
 
@@ -218,116 +195,113 @@ While not present in the repository, the build process creates an `output/` dire
 - Python 3.x
 
 ### Core Libraries and Frameworks
-- **Jinja2** (v2.11.3): Template engine for rendering HTML pages
-- **markdown2** (v2.3.8): Markdown parsing library
-- **click** (v7.1.1): Command-line interface toolkit
-
-### Python Standard Libraries
-- `os`: File and directory operations
-- `datetime`: Date and time manipulations
-- `pathlib`: Path handling
-
-### HTML Templating
-- HTML5
-- Jinja2 HTML templates
+- **Jinja2** (v2.11.3): Templating engine for rendering HTML templates
+- **markdown2** (v2.3.8): Markdown parsing library for converting Markdown to HTML
+- **click** (v7.1.1): Python package for creating command-line interfaces
 
 ### Development Tools
-- Git (version control)
-- Markdown for content writing
+- **Python Standard Libraries**:
+  - `os`: File and directory operations
+  - `datetime`: Date and time manipulations
+  - `pathlib`: Path and file system operations
 
-### Supported Content Types
-- Markdown (.md) files for blog posts and resume
-- HTML templates for rendering
+### Template Management
+- HTML templates using Jinja2 template engine
+- Supports multiple template directories for different content types (default, resume)
+
+### Content Processing
+- Markdown-based content management
+- Metadata extraction from Markdown files
+- Dynamic content rendering
 
 ## Additional Notes
 
 ### Project Limitations
-- Currently supports two primary template types: blog and resume
-- Limited to basic static site generation
-- No built-in deployment mechanisms (deployment solutions are planned)
+- Supports two primary template types: blog and resume
+- Static site generation with basic functionality
+- Manual markdown content management required
 
-### Performance Considerations
-- Utilizes lightweight Python libraries for parsing and rendering
-- Generates static HTML files, ensuring fast page load times
-- Minimal processing overhead due to simple parsing and templating approach
-
-### Security Notes
-- Static site generation reduces potential security vulnerabilities associated with dynamic websites
-- Uses trusted open-source libraries with active maintenance
+### Performance Characteristics
+- Lightweight Python libraries ensure fast processing
+- Generates static HTML files for quick page loads
+- Minimal computational overhead during site generation
 
 ### Compatibility
-- Compatible with Python 3.6 and higher
-- Works cross-platform (Windows, macOS, Linux)
-- Requires minimal system resources
+- Supports Python 3.6 and higher
+- Cross-platform compatibility (Windows, macOS, Linux)
+- Works with minimal system resources
 
 ### Potential Use Cases
-- Personal blogs
-- Online resumes
-- Simple portfolio websites
-- Documentation sites with markdown content
+- Personal blogs and portfolios
+- Online resume websites
+- Simple documentation sites
+- Markdown-based content publishing
 
-### Known Limitations
+### Known Constraints
 - No dynamic content generation
-- No built-in search functionality
-- Limited to predefined templates
-- Manual markdown file management required
+- Limited built-in template options
+- Manual markdown file management
+- No integrated search functionality
 
-### Future Development Roadmap
+### Future Development Considerations
 - Implement custom category and tag support
-- Develop additional static site templates (portfolio, landing page)
-- Explore simplified deployment options
+- Develop additional static site templates
+- Explore simplified deployment mechanisms
 - Enhance template customization capabilities
+
+### Security Considerations
+- Static site generation reduces potential web vulnerabilities
+- Uses trusted, actively maintained open-source libraries
+- Minimal attack surface due to simple generation process
 
 ## Contributing
 
-We welcome and appreciate contributions to Manticore! By contributing, you help improve the project for everyone.
+We welcome contributions to Manticore! Here are some guidelines to help you get started:
 
-### Contribution Guidelines
+### Ways to Contribute
 
-#### How to Contribute
+- Report bugs and request features by opening issues
+- Submit pull requests with bug fixes or enhancements
+- Improve documentation
+- Suggest improvements to the existing code
+
+### Contribution Process
+
 1. Fork the repository
 2. Create a new branch for your feature or bugfix
 3. Make your changes
-4. Write or update tests as necessary
+4. Write or update tests as needed
 5. Ensure all tests pass
 6. Submit a pull request
 
-#### Development Setup
+### Development Setup
+
 - Use Python 3.6 or higher
-- Create a virtual environment
+- Create a virtual environment: `virtualenv venv`
 - Install dependencies: `pip install -r requirements.txt`
-- Run the application using `python build.py`
 
-#### Code Style
-- Follow standard Python PEP 8 guidelines
-- Use clear, descriptive variable and function names
-- Write docstrings for functions and classes
-- Keep code modular and well-organized
+### Code Guidelines
 
-#### Testing
-- Ensure your code changes do not break existing functionality
-- Add tests for new features or bug fixes
-- Run existing tests before submitting a pull request
+- Follow PEP 8 style guidelines
+- Write clear, concise, and meaningful commit messages
+- Add comments to explain complex logic
+- Ensure code is readable and maintainable
 
-#### Reporting Issues
-- Use GitHub Issues to report bugs or suggest improvements
-- Provide a clear and detailed description
-- Include steps to reproduce the issue if applicable
-- Specify your Python version and environment details
+### Reporting Issues
 
-#### Feature Suggestions
-- Open an issue to discuss proposed features
-- Explain the use case and potential implementation
-- Be open to feedback and collaboration
+- Use the GitHub Issues section
+- Provide a clear and descriptive title
+- Include steps to reproduce the issue
+- Add any relevant error messages or screenshots
 
-### Dependencies
-The project currently uses the following key dependencies:
-- click (v7.1.1)
-- Jinja2 (v2.11.3)
-- markdown2 (v2.3.8)
-- MarkupSafe (v1.1.1)
+### Pull Request Process
 
-When adding new dependencies, please update the `requirements.txt` file.
+- Provide a clear description of your changes
+- Link any related issues
+- Ensure your code passes all existing tests
+- Be open to feedback and potential requested changes
+
+Thank you for contributing to Manticore!
 
 ## License
 
@@ -337,13 +311,16 @@ This project is licensed under the MIT License.
 - **Type**: MIT License
 - **Copyright**: © 2019 Blaze
 
-A full copy of the license is available in the [LICENSE](LICENSE) file in the repository root.
+A copy of the full license is available in the [LICENSE](LICENSE) file in the project root.
 
-The MIT License is a permissive open-source license that allows you to:
-- Use the software commercially
-- Modify the software
-- Distribute the software
-- Sublicense the software
-- Use the software for private use
+#### Key Permissions
+- Commercial use
+- Modification
+- Distribution
+- Private use
 
-The only condition is that the original copyright notice must be included in any substantial portion of the software.
+#### Conditions
+- License and copyright notice must be included
+- No warranty is provided
+
+For complete details, please review the full license text.
